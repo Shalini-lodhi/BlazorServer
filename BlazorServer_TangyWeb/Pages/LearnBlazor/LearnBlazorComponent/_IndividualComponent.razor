@@ -1,9 +1,12 @@
-﻿<div class="gn-light border p-2 m-1 col-3" style="background-color:white">
+﻿<div 
+    class="bg-light border p-2 m-1 col-3" 
+    @onclick="(args)=>LastSelectedProductChange(args, Product.Name)" 
+    style="background-color:white"
+>
     <h4 class="text-secondary"> Product @Product.Id</h4>
     <input type="checkbox" @onchange="FavoriteUpdated" /> Add to Favorite  <br /><br />
     Name - @Product.Name <br />
     Show Properties
-    <input type="checkbox" @bind-value="Product.IsActive" ckhecked="@(Product.IsActive?"checked":null)" />
     <input type="checkbox" @bind-value="Product.IsActive" ckhecked="@(Product.IsActive?"checked":null)" />
     @if (Product.IsActive)
     {
@@ -23,9 +26,15 @@
     //evet call back
     [Parameter]
     public EventCallback<bool> OnFavoriteUpdated { get; set; }
+    [Parameter]
+    public EventCallback<string> OnLastSelectedProductChange { get; set; }
 
     private async Task FavoriteUpdated(ChangeEventArgs e)
     {
         await OnFavoriteUpdated.InvokeAsync((bool)e.Value);
+    }
+    private async Task LastSelectedProductChange(MouseEventArgs e, string name)
+    {
+        await OnLastSelectedProductChange.InvokeAsync(name);
     }
 }

@@ -2,17 +2,23 @@
 
 <h2 class="text-success">Demo Products</h2>
 <p>Total Favorite Item: @SelectedFavoriteCount</p>
+<p>Selected Item: @LastSelectedProduct</p>
 <div class="border p-4 mt-2" style="background-color:azure">
     <div class="row">
         @foreach (var prod in Products)
         {
-            <_IndividualComponent Product="prod" OnFavoriteUpdated="FavoriteCountUpdate"></_IndividualComponent>
+            <_IndividualComponent Product="prod"
+                              OnFavoriteUpdated="FavoriteCountUpdate"
+                              OnLastSelectedProductChange="SelectedProductUpdate">
+            </_IndividualComponent>
         }
     </div>
 </div>
 
 @code {
     private int SelectedFavoriteCount { get; set; } = 0;
+    private string LastSelectedProduct { get; set; }
+
     List<Demo_Product> Products = new();
     protected override void OnInitialized()
     {
@@ -20,7 +26,7 @@
             {
                 Id = 1,
                 Name = "Product1",
-                IsActive = true,
+                IsActive = false,
                 Price = 0.00,
                 Prop = new List<Demo_ProductProp>()
     {
@@ -34,7 +40,7 @@
             {
                 Id = 2,
                 Name = "Product2",
-                IsActive = true,
+                IsActive = false,
                 Price = 0.00,
                 Prop = new List<Demo_ProductProp>()
     {
@@ -48,7 +54,7 @@
             {
                 Id = 3,
                 Name = "Product3",
-                IsActive = true,
+                IsActive = false,
                 Price = 0.00,
                 Prop = new List<Demo_ProductProp>()
     {
@@ -70,5 +76,9 @@
         {
             SelectedFavoriteCount--;
         }
+    }
+    protected void SelectedProductUpdate(string productName)
+    {
+        LastSelectedProduct = productName;
     }
 }
