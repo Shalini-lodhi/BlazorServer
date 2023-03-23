@@ -1,0 +1,74 @@
+﻿@page "/learnBlazor/demoProduct"
+
+<h2 class="text-success">Demo Products</h2>
+<p>Total Favorite Item: @SelectedFavoriteCount</p>
+<div class="border p-4 mt-2" style="background-color:azure">
+    <div class="row">
+        @foreach (var prod in Products)
+        {
+            <_IndividualComponent Product="prod" OnFavoriteUpdated="FavoriteCountUpdate"></_IndividualComponent>
+        }
+    </div>
+</div>
+
+@code {
+    private int SelectedFavoriteCount { get; set; } = 0;
+    List<Demo_Product> Products = new();
+    protected override void OnInitialized()
+    {
+        Products.Add(new()
+            {
+                Id = 1,
+                Name = "Product1",
+                IsActive = true,
+                Price = 0.00,
+                Prop = new List<Demo_ProductProp>()
+    {
+    new Demo_ProductProp{Id = 1, Key = "Color", Value = "Black"},
+    new Demo_ProductProp{Id = 2, Key = "Size", Value = "XS"},
+    new Demo_ProductProp{Id = 3, Key = "Material", Value = "Cotton"},
+
+    }
+            });
+        Products.Add(new()
+            {
+                Id = 2,
+                Name = "Product2",
+                IsActive = true,
+                Price = 0.00,
+                Prop = new List<Demo_ProductProp>()
+    {
+    new Demo_ProductProp{Id = 1, Key = "Color", Value = "White"},
+    new Demo_ProductProp{Id = 2, Key = "Size", Value = "S"},
+    new Demo_ProductProp{Id = 3, Key = "Material", Value = "Rayon"},
+
+    }
+            });
+        Products.Add(new()
+            {
+                Id = 3,
+                Name = "Product3",
+                IsActive = true,
+                Price = 0.00,
+                Prop = new List<Demo_ProductProp>()
+    {
+    new Demo_ProductProp{Id = 1, Key = "Color", Value = "Orange"},
+    new Demo_ProductProp{Id = 2, Key = "Size", Value = "L"},
+    new Demo_ProductProp{Id = 3, Key = "Material", Value = "Cotton"},
+
+    }
+            });
+    }
+
+    protected void FavoriteCountUpdate(bool isSelected)
+    {
+        if (isSelected)
+        {
+            SelectedFavoriteCount++;
+        }
+        else if (!isSelected)
+        {
+            SelectedFavoriteCount--;
+        }
+    }
+}

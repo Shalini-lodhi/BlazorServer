@@ -1,0 +1,144 @@
+﻿@page "/learnBlazor/bindProp"
+<h2 class="text-success">Individual Prodcut</h2>
+<div class="row">
+    <div class="col-6 border p-4">
+        <h3 class=" text-primary">Product Playground</h3> <hr />
+        <div>
+            Active:
+            <input type="checkbox" @bind-value="Product.IsActive" checked="@(Product.IsActive?"checked":null)" />
+        </div>
+        <div>
+            Product Properties:
+            <select @bind="selectedProp">
+                @foreach (var p in Product.Prop)
+                {
+                    <option value="@p.Key">@p.Key</option>
+                }
+            </select>
+            <br />
+            @*two way binding*@
+            Input Price:
+            <input type="number" @bind-value="@Product.Price" @bind-value:event="oninput" />
+        </div>
+    </div>
+    <div class="col-6 border p-4">
+        <h3 class="text-primary">Product Summary</h3> <hr />
+        <br />
+        Name: @Product.Name
+        <br />
+        Active: @Product.IsActive
+        <br />
+        Prize: @Product.Price
+        <br />
+        This Product: @(Product.IsActive ? "Active" : "In-Active")
+        <br />
+        Property Selected : @selectedProp
+        <br />
+        @if (!String.IsNullOrWhiteSpace(selectedProp))
+        {
+            <p>Property Value: @Product.Prop.FirstOrDefault( u => u.Key==selectedProp).Value</p>
+        }
+    </div>
+</div>
+<br />
+<div class="col-12">
+    <h2 class="text-success">Product Table</h2>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <td>Product Name</td>
+                <td>Product Price</td>
+                <td>Product Property</td>
+                <td>Product Is-Active</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var p in Products)
+            {
+                <tr>
+                    <td>
+                        <input type="text" @bind-value="p.Name" @bind-value:event="oninput" />
+                    </td>
+                    <td>
+                        <input type="text" @bind-value="p.Price" @bind-value:event="oninput" />
+                    </td>
+                    <td>
+                        <select @bind="Prop">
+                            @foreach (var pro in p.Prop)
+                            {
+                                <option value="@pro.Key">@pro.Key</option>
+                            }
+                        </select>
+                    </td>
+                    <td>
+                        <input type="checkbox" @bind-value="p.IsActive" checked="@(p.IsActive?"checked":null)" />
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <br />
+    <h2 class="text-success">Product </h2>
+    @foreach (var p in Products)
+    {
+        <p><b>@p.Name</b> -
+            @if (!String.IsNullOrWhiteSpace(selectedProp))
+            {
+            <span>Property: @Product.Prop.FirstOrDefault( u => u.Key==selectedProp).Value</span>
+            } [@p.Price]  is @(p.IsActive ? "Active" : "InActive")</p>
+    }
+
+</div>
+
+<hr />
+@code {
+    private string selectedProp = "";
+    Demo_Product Product = new()
+        {
+            Id = 1,
+            Name = "Product1",
+            IsActive = true,
+            Price = 0.00,
+            Prop = new List<Demo_ProductProp>()
+            {
+                new Demo_ProductProp{Id = 1, Key = "Color", Value = "Black"},
+                new Demo_ProductProp{Id = 2, Key = "Size", Value = "XS"},
+                new Demo_ProductProp{Id = 3, Key = "Material", Value = "Cotton"},
+
+            }
+        };
+    private string Prop = "";
+    List<Demo_Product> Products = new();
+    protected override void OnInitialized()
+    {
+        Products.Add(new()
+            {
+                Id = 1,
+                Name = "Product1",
+                IsActive = true,
+                Price = 0.00,
+                Prop = new List<Demo_ProductProp>()
+            {
+                new Demo_ProductProp{Id = 1, Key = "Color", Value = "Black"},
+                new Demo_ProductProp{Id = 2, Key = "Size", Value = "XS"},
+                new Demo_ProductProp{Id = 3, Key = "Material", Value = "Cotton"},
+
+            }
+            });
+        Products.Add(new()
+            {
+                Id = 2,
+                Name = "Product2",
+                IsActive = true,
+                Price = 0.00,
+                Prop = new List<Demo_ProductProp>()
+            {
+                new Demo_ProductProp{Id = 1, Key = "Color", Value = "White"},
+                new Demo_ProductProp{Id = 2, Key = "Size", Value = "S"},
+                new Demo_ProductProp{Id = 3, Key = "Material", Value = "Rayon"},
+
+            }
+            });
+    }
+}
