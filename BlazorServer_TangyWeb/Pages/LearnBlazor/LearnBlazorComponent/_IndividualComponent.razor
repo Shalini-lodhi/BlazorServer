@@ -23,9 +23,11 @@
 @code {
     [Parameter]
     public Demo_Product Product { get; set; }
+    
     //evet call back
     [Parameter]
     public EventCallback<bool> OnFavoriteUpdated { get; set; }
+
     [Parameter]
     public EventCallback<string> OnLastSelectedProductChange { get; set; }
 
