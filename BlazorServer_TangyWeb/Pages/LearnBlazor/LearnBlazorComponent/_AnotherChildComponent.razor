@@ -1,6 +1,9 @@
 ﻿<div>
     <h4 class="text-primary pt-3">Child Component</h4>
-    <input id="nametemp" @attributes="InputAttributes"/>
+    @*<input id="nametemp" @attributes="InputAttributes"/>*@
+    <input id="nametemp" @attributes="InputAttributes" placeholder="Child Placeholder"/>
+
+
 </div>
 @code {
     //[Parameter]
@@ -9,11 +12,15 @@
     //public string Required { get; set; }
     //[Parameter]
     //public int MaxLength { get; set; }
-    [Parameter]
-    public Dictionary<string, object> InputAttributes { get; set; } = new Dictionary<string, object>()
-    {
-        {"required", "required"},
-        {"placeholder", "Enter name from parent"},
-        {"maxlength", 5}
-    };
-}
+
+    //[Parameter]
+    //public Dictionary<string, object> InputAttributes { get; set; } = new Dictionary<string, object>()
+    //{
+    //    {"required", "required"},
+    //    {"placeholder", "Enter name from parent"},
+    //    {"maxlength", 5}
+    //};
+
+    [Parameter (CaptureUnmatchedValues =true)]
+    public Dictionary<string, object> InputAttributes { get; set; } = new Dictionary<string, object>();
+ }
