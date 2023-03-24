@@ -4,8 +4,12 @@
     style="background-color:white"
 >
     <h4 class="text-secondary"> Product @Product.Id</h4>
+
     <input type="checkbox" @onchange="FavoriteUpdated" /> Add to Favorite  <br /><br />
     Name - @Product.Name <br />
+
+    <p>RF from Parent - @FirstFragment, @SecondFragment</p>
+
     Show Properties
     <input type="checkbox" @bind-value="Product.IsActive" ckhecked="@(Product.IsActive?"checked":null)" />
     @if (Product.IsActive)
@@ -20,16 +24,23 @@
     <div />
 
 </div>
+
 @code {
     [Parameter]
     public Demo_Product Product { get; set; }
-    
+
     //evet call back
     [Parameter]
     public EventCallback<bool> OnFavoriteUpdated { get; set; }
 
     [Parameter]
     public EventCallback<string> OnLastSelectedProductChange { get; set; }
+
+    [Parameter]
+    public RenderFragment FirstFragment{ get; set; }
+
+    [Parameter]
+    public RenderFragment SecondFragment { get; set; }
 
     private async Task FavoriteUpdated(ChangeEventArgs e)
     {

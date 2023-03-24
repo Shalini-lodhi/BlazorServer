@@ -1,0 +1,12 @@
+﻿<div>
+    <h4 class="text-primary pt-3">Child Component</h4>
+    <input id="nametemp" placeholder="@Placeholder" required="@Required" maxlength="@MaxLength" />
+</div>
+@code {
+    [Parameter]
+    public string Placeholder { get; set; }
+    [Parameter]
+    public string Required { get; set; }
+    [Parameter]
+    public int MaxLength { get; set; }
+}
